@@ -85,6 +85,16 @@ button{cursor:pointer}
 .statusbar{background:var(--navy);color:#fff;display:flex;justify-content:space-between;padding:10px 22px 4px;font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
 .topbar{display:flex;align-items:center;gap:10px;padding:6px 16px 10px;min-height:48px}
 .topbar h1{font-size:18px;margin:0;font-weight:700;flex:1;text-wrap:balance}
+.quote{display:flex;flex-direction:column;gap:8px;background:var(--brand-soft);border-radius:12px;padding:10px}
+.quote-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700}
+.quote-h b{font-size:17px;font-variant-numeric:tabular-nums}
+.prog{display:flex;flex-direction:column;gap:6px}
+.prog-h{display:flex;justify-content:space-between;font-size:13px}
+.prog-bar{display:flex;gap:3px}
+.prog-bar i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.prog-bar i.done{background:var(--ok)}
+.prog-bar i.now{background:var(--tape)}
+@media (max-width:400px){.seg button{padding:6px 10px}}
 .ccard{flex:none;width:200px;border:1px solid var(--line);background:var(--surface);border-radius:18px;overflow:hidden;padding:0;text-align:start;display:flex;flex-direction:column}
 .ccover{display:block;height:90px;background-size:cover;background-position:center}
 .cbody{position:relative;display:flex;flex-direction:column;gap:3px;padding:26px 12px 12px}
@@ -357,6 +367,7 @@ button.pro{border:1px solid var(--line);background:var(--surface);border-radius:
       <button type="button" data-action="role" data-role="customer">عميل</button>
       <button type="button" data-action="role" data-role="crafter">صنايعي</button>
       <button type="button" data-action="role" data-role="supplier">مورّد</button>
+      <button type="button" data-action="role" data-role="company">شركة</button>
     </div>
   </div>
   <main class="app" id="app"></main>
@@ -565,6 +576,14 @@ const KEY='shatabli-demo-v1';
 let S;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!S.ui)S=seed();
+if(!S.companySeeded){
+  S.companySeeded=true;
+  S.requests.push(
+    {id:'rk1',mine:false,company:'k1',crafter:null,customer:'مصطفى ع.',area:140,pkg:'mid',desc:'معاينة لتشطيب شقة ١٤٠ م² (طوب أحمر (على المحارة))، باقة متوسط.',addr:'التجمع الخامس، النرجس ٢',day:'بكرة',time:'معاينة مجانية',status:'pending'},
+    {id:'rk2',mine:false,company:'k1',crafter:null,customer:'دينا س.',area:110,pkg:'lux',desc:'تشطيب شقة ١١٠ م²، باقة سوبر لوكس.',addr:'مدينة نصر، مكرم عبيد',day:'بدأ ١ سبتمبر',time:'مشروع',status:'accepted',stage:3,quote:{total:572000,days:75,note:'شامل التصميم ٣D'}},
+    {id:'rk3',mine:true,company:'k1',crafter:null,customer:'أنت',area:120,pkg:'mid',desc:'معاينة لتشطيب شقة ١٢٠ م² (نص تشطيب)، باقة متوسط.',addr:'مدينة نصر، شارع عباس العقاد',day:'الخميس اللي فات',time:'معاينة مجانية',status:'quoted',quote:{total:384000,days:70,note:'السعر شامل بورسلين ٦٠×١٢٠ في الريسبشن، وضمان ٥ سنين.'}}
+  );
+}
 if(!S.calc)S.calc={area:120,rooms:3,baths:2,level:'mid',trades:['plast','elec','plumb','tile','paint','gyps','carp','alu']};
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 
@@ -584,7 +603,9 @@ const itemsTotal=items=>Object.entries(items).reduce((s,[id,q])=>s+product(id).p
 const itemsCount=items=>Object.values(items).reduce((a,b)=>a+b,0);
 const newId=p=>p+Date.now().toString(36);
 
-const REQ_STATUS={pending:['wait','في انتظار الرد'],accepted:['go','متفق عليه'],done:['ok','تم الشغل'],rejected:['bad','اعتذر']};
+const REQ_STATUS={pending:['wait','في انتظار الرد'],inspect:['go','المعاينة متأكدة'],quoted:['wait','وصل عرض سعر'],accepted:['go','متفق عليه'],done:['ok','تم الشغل'],rejected:['bad','اعتذر'],declined:['bad','العرض اترفض']};
+const STAGES=['محارة','تأسيس كهربا وسباكة','جبس بورد','سيراميك وبورسلين','نجارة وألوميتال','نقاشة','تسليم الشقة'];
+const ME_COMPANY='k1';
 const ORD_STATUS={new:['wait','طلب جديد'],preparing:['go','بيتجهّز'],onway:['go','في الطريق'],delivered:['ok','اتسلّم']};
 const pill=(map,s)=>`<span class="pill ${map[s][0]}">${map[s][1]}</span>`;
 
@@ -764,6 +785,8 @@ function cOrders(){
         <p>${esc(r.desc)}</p>${facts(r)}
         ${r.price?`<div class="small"><span class="pill go">سعر ثابت</span> <b>${money(r.price)}</b></div>`:''}
         ${r.status==='done'&&!r.rating?`<div class="ratebox">قيّم الشغل<div class="starbtns">${[5,4,3,2,1].map(v=>`<button type="button" data-action="rate" data-id="${r.id}" data-v="${v}" aria-label="${v} نجوم">☆</button>`).join('')}</div></div>`:''}
+        ${k&&r.status==='quoted'?`<div class="quote"><div class="quote-h"><span>عرض سعر من ${k.name}</span><b>${money(r.quote.total)}</b></div><div class="small muted">مدة التنفيذ ${n(r.quote.days)} يوم${r.quote.note?` · ${esc(r.quote.note)}`:''}</div><div class="row"><button class="btn sm" type="button" data-action="quote-accept" data-id="${r.id}">اقبل العرض</button><button class="btn ghost sm" type="button" data-action="quote-decline" data-id="${r.id}">ارفض</button></div></div>`:''}
+        ${k&&r.status==='accepted'?progress(r):''}
         ${r.rating?`<div class="small muted">تقييمك: <span class="stars">${'★'.repeat(r.rating)}</span></div>`:''}
       </div>`}).join(''):`<div class="empty">لسه مطلبتش صنايعي أو شركة.<br>اختار من الصفحة الرئيسية.</div>`)
     :(ords.length?ords.map(o=>`<div class="card job">
@@ -1000,6 +1023,77 @@ function cCalc(){
   </div>`;
 }
 
+/* ---------- company ---------- */
+function progress(r){
+  const st=r.stage||0;
+  return `<div class="prog"><div class="prog-h"><span>المرحلة: <b>${STAGES[st]}</b></span><span class="muted small">${n(st+1)} من ${n(STAGES.length)}</span></div>
+    <div class="prog-bar">${STAGES.map((x,i)=>`<i class="${i<st?'done':i===st?'now':''}" title="${x}"></i>`).join('')}</div></div>`;
+}
+const myCompReqs=st=>S.requests.filter(r=>r.company===ME_COMPANY&&(!st||st.includes(r.status))).reverse();
+function compHello(){
+  const k=company(ME_COMPANY);
+  return `<div class="card" style="display:flex;gap:12px;align-items:center">${compLogo(k)}<div><b>${k.name}</b><div class="small muted">${k.areas} · <span style="color:var(--tape)">★</span> ${r1(k.rating)}</div></div></div>`;
+}
+function coRequests(){
+  const list=myCompReqs(['pending','inspect','quoted']);
+  const card=r=>`<div class="card job">
+    <div class="top"><b>${esc(r.customer)}</b>${pill(REQ_STATUS,r.status)}</div>
+    <p>${esc(r.desc)}</p>${facts(r)}
+    ${r.status==='pending'?`<div class="row"><button class="btn sm" type="button" data-action="co-status" data-id="${r.id}" data-v="inspect">أكّد المعاينة</button><button class="btn ghost sm" type="button" data-action="co-status" data-id="${r.id}" data-v="rejected">اعتذر</button></div>`:''}
+    ${r.status==='inspect'?`<button class="btn sm tape" type="button" data-action="open-quote" data-id="${r.id}">اكتب عرض السعر</button>`:''}
+    ${r.status==='quoted'?`<div class="small muted">بعتّ عرض بـ <b>${money(r.quote.total)}</b>، ومستنيين رد العميل.</div>`:''}
+  </div>`;
+  return `${topbar('طلبات المعاينة')}
+  <div class="scroll">${compHello()}
+    <div class="list">${list.length?list.map(card).join(''):`<div class="empty">مفيش طلبات معاينة دلوقتي.<br>جرّب: ادخل كـ «عميل»، وافتح «مساكن للتشطيبات» من شركات التشطيب، واطلب معاينة.</div>`}</div>
+  </div>`;
+}
+function coProjects(){
+  const act=myCompReqs(['accepted']), done=myCompReqs(['done']);
+  const card=r=>`<div class="card job">
+    <div class="top"><b>${esc(r.customer)}</b>${pill(REQ_STATUS,r.status)}</div>
+    <p>${esc(r.desc)}</p>
+    <div class="facts"><span>${ic('pin')}${esc(r.addr)}</span>${r.quote?`<span>${ic('wallet')}${money(r.quote.total)}</span>`:''}</div>
+    ${r.status==='accepted'?progress(r)+`<button class="btn sm tape" type="button" data-action="co-stage" data-id="${r.id}">${ic('check')} ${(r.stage||0)>=STAGES.length-1?'سلّمت الشقة':'خلصت مرحلة '+STAGES[r.stage||0]}</button>`:''}
+    ${r.status==='done'?`<div class="small muted">${r.rating?`تقييم العميل: <span class="stars">${'★'.repeat(r.rating)}</span>`:'في انتظار تقييم العميل'}</div>`:''}
+  </div>`;
+  return `${topbar('المشاريع')}
+  <div class="scroll">
+    <div class="sec"><h2>شغالين فيها (${n(act.length)})</h2><div class="list">${act.length?act.map(card).join(''):'<div class="empty">مفيش مشاريع شغالة. لما عميل يقبل عرضك، المشروع هيظهر هنا.</div>'}</div></div>
+    <div class="sec"><h2>اتسلّمت</h2><div class="list">${done.length?done.map(card).join(''):'<div class="empty">لسه مفيش.</div>'}</div></div>
+  </div>`;
+}
+function coAccount(){
+  const k=company(ME_COMPANY), all=myCompReqs();
+  const val=all.filter(r=>['accepted','done'].includes(r.status)).reduce((a,r)=>a+(r.quote?.total||0),0);
+  const quoted=all.filter(r=>['quoted','accepted','done','declined'].includes(r.status)).length;
+  const won=all.filter(r=>['accepted','done'].includes(r.status)).length;
+  return `${topbar('حساب الشركة')}<div class="scroll">${compHello()}
+    <div class="stats">
+      <div class="stat"><b>${n(all.filter(r=>r.status==='accepted').length)}</b><span>مشروع شغال</span></div>
+      <div class="stat"><b>${quoted?n(Math.round(won/quoted*100))+'٪':'—'}</b><span>عروض اتقبلت</span></div>
+      <div class="stat"><b>${n(Math.round(val/1000))}</b><span>ألف ج.م عقود</span></div>
+    </div>
+    <div class="card menu">${Object.entries(PKG).map(([p,v])=>`<div><span>باقة ${v.name}</span><b>${money(k.prices[p])} / م²</b></div>`).join('')}<div><span>الضمان</span><b>${n(k.guarantee)} سنين</b></div><div><span>مدة التنفيذ</span><b>حوالي ${n(k.days)} يوم</b></div></div>
+    <button class="btn ghost block" type="button" data-action="reset">ابدأ التجربة من الأول</button>
+  </div>`;
+}
+function quoteSheet(id){
+  const r=S.requests.find(x=>x.id===id), k=company(ME_COMPANY), pkg=r.pkg||'mid', area=r.area||120;
+  return `<div class="sheet-wrap" data-action="close-sheet"><form class="sheet" id="quoteForm" data-id="${id}">
+    <div class="grab"></div>
+    <h2>عرض سعر لـ ${esc(r.customer)}</h2>
+    <div class="small muted">${esc(r.desc)}</div>
+    <div class="qs-price"><span>باقة ${PKG[pkg].name} · ${n(area)} م² × ${money(k.prices[pkg])}</span><b>${money(k.prices[pkg]*area)}</b></div>
+    <div class="grid2">
+      <label class="field">السعر النهائي (ج.م)<input id="qt-total" inputmode="numeric" value="${k.prices[pkg]*area}"></label>
+      <label class="field">مدة التنفيذ (يوم)<input id="qt-days" inputmode="numeric" value="${k.days}"></label>
+    </div>
+    <label class="field">ملاحظات للعميل<textarea id="qt-note">السعر شامل الخامات والمصنعية، وضمان ${n(k.guarantee)} سنين على الشغل.</textarea></label>
+    <div class="row"><button class="btn ghost" type="button" data-action="close-sheet">إلغاء</button><button class="btn tape" type="submit">ابعت العرض</button></div>
+  </form></div>`;
+}
+
 /* ---------- crafter ---------- */
 function kIncoming(){
   const list=S.requests.filter(r=>r.crafter===ME_CRAFTER&&r.status==='pending').reverse();
@@ -1098,6 +1192,10 @@ function render(){
     const pend=S.requests.filter(r=>r.crafter===ME_CRAFTER&&r.status==='pending').length;
     tabs=[{id:'home',label:'الطلبات',icon:'inbox',badge:pend},{id:'jobs',label:'شغلي',icon:'tool'},{id:'account',label:'حسابي',icon:'user'}];
     html=({home:kIncoming,jobs:kJobs,account:kAccount}[tab]||kIncoming)();
+  }else if(role==='company'){
+    const pend=myCompReqs(['pending','inspect']).length;
+    tabs=[{id:'home',label:'المعاينات',icon:'inbox',badge:pend},{id:'projects',label:'المشاريع',icon:'building'},{id:'account',label:'الشركة',icon:'user'}];
+    html=({home:coRequests,projects:coProjects,account:coAccount}[tab]||coRequests)();
   }else{
     const nw=S.orders.filter(o=>o.status==='new').length;
     tabs=[{id:'home',label:'الطلبات',icon:'inbox',badge:nw},{id:'products',label:'المنتجات',icon:'box'},{id:'account',label:'حسابي',icon:'user'}];
@@ -1108,7 +1206,7 @@ function render(){
   app.innerHTML=`<div class="statusbar"><span>${now.toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit'})}</span><span class="sys" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="currentColor" opacity=".5"/><rect x="2.5" y="2.5" width="15" height="7" rx="1.5"/><rect x="24" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span></div>
     ${html.includes('class="cartbar"')?`<div style="display:flex;flex-direction:column;flex:1;min-height:0">${html}</div>`:html}
     ${tabbar(tabs)}
-    ${sheet?(sheet.startsWith('q:')?quickSheet(sheet.slice(2)):sheet.startsWith('k:')?companySheet(sheet.slice(2)):requestSheet(sheet)):''}
+    ${sheet?(sheet.startsWith('q:')?quickSheet(sheet.slice(2)):sheet.startsWith('k:')?companySheet(sheet.slice(2)):sheet.startsWith('quote:')?quoteSheet(sheet.slice(6)):requestSheet(sheet)):''}
     <div class="toast" id="toast" data-show="false" role="status"></div>
     ${render.splash?`<div class="splash" id="splash"><img src="${LOGO_FULL}" alt="شطبلي، تشطيبات بكل سهولة"></div>`:''}`;
   const sc=app.querySelector('.scroll'); if(sc&&render.keepScroll!=null){sc.scrollTop=render.keepScroll;}
@@ -1159,6 +1257,21 @@ document.addEventListener('click',e=>{
     case 'open-companies': S.ui.stack.push({name:'companies'}); return go({});
     case 'open-company': S.ui.stack.push({name:'company',id}); return go({});
     case 'open-csheet': return go({sheet:'k:'+id},true);
+    case 'open-quote': return go({sheet:'quote:'+id},true);
+    case 'co-status':{
+      const r=S.requests.find(x=>x.id===id); r.status=el.dataset.v; go({},true);
+      return toast(r.status==='inspect'?'المعاينة اتأكدت. بعد ما تعاين، اكتب عرض السعر.':'اتبعت اعتذارك للعميل.');
+    }
+    case 'co-stage':{
+      const r=S.requests.find(x=>x.id===id);
+      if((r.stage||0)>=STAGES.length-1){r.status='done'; go({},true); return toast('مبروك! الشقة اتسلّمت، والعميل يقدر يقيّمكم دلوقتي.');}
+      r.stage=(r.stage||0)+1; go({},true); return toast(`المرحلة الجاية: ${STAGES[r.stage]}. العميل هيوصله إشعار.`);
+    }
+    case 'quote-accept':{
+      const r=S.requests.find(x=>x.id===id); r.status='accepted'; r.stage=0; go({},true);
+      return toast('قبلت العرض. الشركة هتبدأ، وتقدر تتابع المراحل من هنا.');
+    }
+    case 'quote-decline':{ const r=S.requests.find(x=>x.id===id); r.status='declined'; go({},true); return toast('رفضت العرض.'); }
     case 'sort': return go({sort:el.dataset.v});
     case 'matcat': return go({matCat:el.dataset.v});
     case 'seg': return go({seg:el.dataset.v});
@@ -1193,6 +1306,16 @@ document.addEventListener('click',e=>{
   }
 });
 document.addEventListener('submit',e=>{
+  if(e.target.id==='quoteForm'){
+    e.preventDefault();
+    const f=e.target, r=S.requests.find(x=>x.id===f.dataset.id);
+    const num=v=>parseInt(String(v).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^0-9]/g,''),10);
+    const total=num(f.querySelector('#qt-total').value), days=num(f.querySelector('#qt-days').value);
+    if(!(total>0&&days>0))return toast('اكتب السعر ومدة التنفيذ بالأرقام');
+    r.quote={total,days,note:f.querySelector('#qt-note').value.trim()}; r.status='quoted';
+    go({sheet:null},true);
+    return toast('العرض اتبعت للعميل.');
+  }
   if(e.target.id==='compForm'){
     e.preventDefault();
     const f=e.target, k=company(f.dataset.id);
@@ -1201,7 +1324,7 @@ document.addEventListener('submit',e=>{
     if(!(area>=30&&area<=1000))return toast('المساحة لازم تكون من ٣٠ لـ ١٠٠٠ متر');
     if(!addr)return toast('اكتب العنوان');
     const pkg=f.querySelector('#k-pkg').value;
-    S.requests.push({id:newId('r'),mine:true,company:k.id,customer:'عميل تجريبي',crafter:null,desc:`معاينة لتشطيب شقة ${n(area)} م² (${f.querySelector('#k-state').value})، باقة ${PKG[pkg].name}. التقدير المبدئي ${money(k.prices[pkg]*area)}.`,addr,day:f.querySelector('#k-day').value,time:'معاينة مجانية',status:'pending'});
+    S.requests.push({id:newId('r'),mine:true,company:k.id,area,pkg,customer:'عميل تجريبي',crafter:null,desc:`معاينة لتشطيب شقة ${n(area)} م² (${f.querySelector('#k-state').value})، باقة ${PKG[pkg].name}. التقدير المبدئي ${money(k.prices[pkg]*area)}.`,addr,day:f.querySelector('#k-day').value,time:'معاينة مجانية',status:'pending'});
     go({sheet:null,tab:'orders',seg:'crafts',stack:[]});
     return toast(`اتحجزت المعاينة مع ${k.name}. هيكلموك يأكدوا الميعاد.`);
   }
