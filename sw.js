@@ -1,5 +1,5 @@
 // Offline cache for Shatabli. Version changes on every build.
-const CACHE = 'shatabli-1791882830';
+const CACHE = 'shatabli-1791883509';
 const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
