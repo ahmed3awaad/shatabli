@@ -153,6 +153,18 @@ button{cursor:pointer}
 .menu svg.mi{width:18px;height:18px;vertical-align:-4px;margin-inline-end:6px;color:var(--brand)}
 .menu svg.chev{width:16px;height:16px;transform:scaleX(-1);color:var(--muted)}
 @media (max-width:520px){.roles{display:none}}
+.hd{display:flex;align-items:center;gap:7px}
+.hd svg{width:19px;height:19px;color:var(--brand);flex:none}
+.pill svg{width:12px;height:12px;stroke-width:2.4}
+.pop-ic.sm{width:34px;height:34px;border-radius:10px}
+.pop-ic.sm svg{width:17px;height:17px}
+.qrow{justify-content:flex-start}
+.qrow>span:nth-child(2){flex:1;display:flex;flex-direction:column;min-width:0}
+.qrow .qp{margin-inline-start:auto}
+.qrow span.pop-ic{display:grid}
+.chip svg{width:15px;height:15px;vertical-align:-3px;margin-inline-end:4px}
+.btn svg.i{width:18px;height:18px}
+.pro .name svg{stroke-width:2.2}
 .tasks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .task{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:12px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:700;text-align:center;line-height:1.35}
 .t-ic{width:42px;height:42px;border-radius:13px;background:var(--tape);color:var(--tape-ink);display:grid;place-items:center;flex:none}
@@ -307,7 +319,7 @@ button{cursor:pointer}
 .tabbar button[aria-current="page"]{color:var(--brand)}
 .badge{position:absolute;top:2px;inset-inline-start:calc(50% + 6px);background:var(--tape);color:var(--tape-ink);font-size:10px;min-width:17px;height:17px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
 
-svg.i{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+svg.i{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 
 h2{font-size:16px;margin:0;font-weight:700}
 .sec{display:flex;flex-direction:column;gap:10px}
@@ -515,18 +527,18 @@ const BA={
 };
 // خدمات سريعة بسعر ثابت (أسعار تجريبية، المفروض شطبلي هي اللي تحددها)
 const QUICK=[
-  {id:'q1',name:'تصليح حنفية أو خلاط',cat:'plumb',price:250,dur:'ساعة'},
-  {id:'q2',name:'تسليك حوض أو بالوعة',cat:'plumb',price:300,dur:'ساعة'},
-  {id:'q5',name:'تركيب نجفة أو أباليك',cat:'elec',price:250,dur:'ساعة'},
-  {id:'q6',name:'تغيير مفتاح أو بريزة',cat:'elec',price:120,dur:'نص ساعة'},
-  {id:'q8',name:'دهان أوضة لحد ١٢ م²',cat:'paint',price:3500,dur:'يومين'},
-  {id:'q9',name:'تغيير كالون باب',cat:'carp',price:300,dur:'ساعة'},
-  {id:'q3',name:'تغيير سيفون أو قاعدة',cat:'plumb',price:450,dur:'ساعتين'},
-  {id:'q4',name:'تركيب سخان',cat:'plumb',price:600,dur:'ساعتين'},
-  {id:'q7',name:'كشف وتصليح عطل كهربا',cat:'elec',price:350,dur:'ساعتين'},
-  {id:'q12',name:'تركيب شاشة على الحيطة',cat:'elec',price:400,dur:'ساعة'},
-  {id:'q10',name:'ضبط باب أو دولاب',cat:'carp',price:250,dur:'ساعة'},
-  {id:'q11',name:'تغيير بلاطة سيراميك مكسورة',cat:'tile',price:250,dur:'ساعتين'}
+  {id:'q1',name:'تصليح حنفية أو خلاط',cat:'plumb',price:250,dur:'ساعة',icon:'drop'},
+  {id:'q2',name:'تسليك حوض أو بالوعة',cat:'plumb',price:300,dur:'ساعة',icon:'faucet'},
+  {id:'q5',name:'تركيب نجفة أو أباليك',cat:'elec',price:250,dur:'ساعة',icon:'lamp'},
+  {id:'q6',name:'تغيير مفتاح أو بريزة',cat:'elec',price:120,dur:'نص ساعة',icon:'plug'},
+  {id:'q8',name:'دهان أوضة لحد ١٢ م²',cat:'paint',price:3500,dur:'يومين',icon:'bucket'},
+  {id:'q9',name:'تغيير كالون باب',cat:'carp',price:300,dur:'ساعة',icon:'key'},
+  {id:'q3',name:'تغيير سيفون أو قاعدة',cat:'plumb',price:450,dur:'ساعتين',icon:'toilet'},
+  {id:'q4',name:'تركيب سخان',cat:'plumb',price:600,dur:'ساعتين',icon:'heater'},
+  {id:'q7',name:'كشف وتصليح عطل كهربا',cat:'elec',price:350,dur:'ساعتين',icon:'zapoff'},
+  {id:'q12',name:'تركيب شاشة على الحيطة',cat:'elec',price:400,dur:'ساعة',icon:'tv'},
+  {id:'q10',name:'ضبط باب أو دولاب',cat:'carp',price:250,dur:'ساعة',icon:'door'},
+  {id:'q11',name:'تغيير بلاطة سيراميك مكسورة',cat:'tile',price:250,dur:'ساعتين',icon:'tile1'}
 ];
 const quickById=id=>QUICK.find(q=>q.id===id);
 // شركات تشطيب (أسماء وأسعار أمثلة للتجربة؛ سعر المتر قريب من النطاقات المنشورة لتشطيب الشقق في مصر ٢٠٢٦)
@@ -568,44 +580,72 @@ const helper=id=>HELPERS.find(h=>h.id===id);
 const teamFor=(t,count)=>HELPERS.filter(h=>h.tasks.includes(t)).sort((a,b)=>b.rating-a.rating||b.jobs-a.jobs).concat(HELPERS.filter(h=>!h.tasks.includes(t))).slice(0,count);
 const hAvatar=(h,extra='')=>`<img class="av" src="${HFACE[h.id]}" alt="${h.name}"${extra}>`;
 /* ---------- icons ---------- */
+// Icons: Lucide (ISC license), lucide-static 0.460.0, inlined.
 const P={
-  paint:'M4 4h13v5H4z M17 6.5h3v5h-8v3 M10.5 14.5h3v6h-3z',
-  bolt:'M13 2 4 14h7l-1 8 9-12h-7z',
-  drop:'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
-  saw:'M3 17 15 5l4 4L7 21H3z M15 5l2-2 4 4-2 2 M7 13l2 2 M10 10l2 2',
-  tiles:'M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z',
-  layers:'M12 3 3 8l9 5 9-5z M3 13l9 5 9-5',
-  trowel:'M4 13h11l5-5 M4 13l2 6h8l1-6',
-  window:'M4 3h16v18H4z M12 3v18 M4 12h16',
-  home:'M3 11 12 4l9 7 M5 10v10h14V10',
-  box:'M3 7l9-4 9 4-9 4z M3 7v10l9 4 9-4V7 M12 11v10',
-  list:'M8 6h12 M8 12h12 M8 18h12 M4 6h.01 M4 12h.01 M4 18h.01',
-  user:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21c1-4 4.5-6 8-6s7 2 8 6',
-  search:'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M20 20l-4-4',
-  back:'M9 6l6 6-6 6',
-  check:'M5 12l5 5 9-10',
-  pin:'M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
-  clock:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 7v5l3 2',
-  truck:'M3 6h11v10H3z M14 10h4l3 3v3h-7 M7 19a2 2 0 1 0 0-.01 M17 19a2 2 0 1 0 0-.01',
-  inbox:'M3 13l3-8h12l3 8 M3 13v6h18v-6h-5l-1 2h-6l-1-2z',
-  tool:'M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3z',
-  bag:'M5 8h14l-1 13H6z M9 8V6a3 3 0 0 1 6 0v2',
-  calc:'M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M8 7h8v3H8z M8 14h.01 M12 14h.01 M16 14h.01 M8 17.5h.01 M12 17.5h.01 M16 17.5h.01',
-  bolt2:'M13 2 4 14h7l-1 8 9-12h-7z',
-  building:'M4 21V5l8-3 8 3v16 M9 21v-4h6v4 M8 8h.01 M12 8h.01 M16 8h.01 M8 12h.01 M12 12h.01 M16 12h.01',
-  shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4',
-  sofa:'M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3 M2 13a2 2 0 0 1 4 0v2h12v-2a2 2 0 0 1 4 0v5H2z M5 18v2 M19 18v2',
-  frame:'M4 5h16v15H4z M7 17l4-5 3 3 2-2 2 4 M9 9h.01',
-  party:'M4 20l4-12 8 8z M14 4l1 2 M19 9l2-1 M17 3l-1 3 M20 14l-3-1',
-  sparkle:'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z',
-  trash:'M4 7h16 M9 7V4h6v3 M6 7l1 13h10l1-13',
-  dots:'M5 12h.01 M12 12h.01 M19 12h.01',
-  hand:'M8 13V5.5a1.5 1.5 0 0 1 3 0V11 M11 10.5V4.5a1.5 1.5 0 0 1 3 0V11 M14 10.5V6a1.5 1.5 0 0 1 3 0v8a7 7 0 0 1-7 7h-.5A6.5 6.5 0 0 1 4 15l-1-3a1.5 1.5 0 0 1 2.6-1.4L8 13',
-  grid:'M4 4h6v6H4z M14 4h6v6h-6z M4 14h6v6H4z M14 14h6v6h-6z',
-  bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4z M10 21h4',
-  wallet:'M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M3 7l13-4v4 M16 13h2'
+  paint:'<rect width="16" height="6" x="2" y="2" rx="2"/> <path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/> <rect width="4" height="6" x="8" y="16" rx="1"/>',
+  bolt:'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  drop:'<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/> <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/>',
+  saw:'<path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/> <path d="m18 15 4-4"/> <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/>',
+  tiles:'<rect width="18" height="18" x="3" y="3" rx="2"/> <path d="M3 12h18"/> <path d="M12 3v18"/>',
+  layers:'<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/> <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/> <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+  trowel:'<rect width="18" height="18" x="3" y="3" rx="2"/> <path d="M12 9v6"/> <path d="M16 15v6"/> <path d="M16 3v6"/> <path d="M3 15h18"/> <path d="M3 9h18"/> <path d="M8 15v6"/> <path d="M8 3v6"/>',
+  window:'<path d="M3 3h18"/> <path d="M20 7H8"/> <path d="M20 11H8"/> <path d="M10 19h10"/> <path d="M8 15h12"/> <path d="M4 3v14"/> <circle cx="4" cy="19" r="2"/>',
+  home:'<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/> <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  box:'<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/> <path d="M12 22V12"/> <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/> <path d="m7.5 4.27 9 5.15"/>',
+  list:'<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/> <path d="M12 11h4"/> <path d="M12 16h4"/> <path d="M8 11h.01"/> <path d="M8 16h.01"/>',
+  user:'<path d="M18 20a6 6 0 0 0-12 0"/> <circle cx="12" cy="10" r="4"/> <circle cx="12" cy="12" r="10"/>',
+  search:'<circle cx="11" cy="11" r="8"/> <path d="m21 21-4.3-4.3"/>',
+  back:'<path d="m9 18 6-6-6-6"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  pin:'<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/> <circle cx="12" cy="10" r="3"/>',
+  clock:'<circle cx="12" cy="12" r="10"/> <polyline points="12 6 12 12 16 14"/>',
+  truck:'<path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/> <path d="M15 18H9"/> <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/> <circle cx="17" cy="18" r="2"/> <circle cx="7" cy="18" r="2"/>',
+  inbox:'<polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/> <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+  tool:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  bag:'<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/> <path d="M3 6h18"/> <path d="M16 10a4 4 0 0 1-8 0"/>',
+  calc:'<rect width="16" height="20" x="4" y="2" rx="2"/> <line x1="8" x2="16" y1="6" y2="6"/> <line x1="16" x2="16" y1="14" y2="18"/> <path d="M16 10h.01"/> <path d="M12 10h.01"/> <path d="M8 10h.01"/> <path d="M12 14h.01"/> <path d="M8 14h.01"/> <path d="M12 18h.01"/> <path d="M8 18h.01"/>',
+  bolt2:'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  building:'<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/> <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/> <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/> <path d="M10 6h4"/> <path d="M10 10h4"/> <path d="M10 14h4"/> <path d="M10 18h4"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/> <path d="m9 12 2 2 4-4"/>',
+  sofa:'<path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/> <path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/> <path d="M4 18v2"/> <path d="M20 18v2"/> <path d="M12 4v9"/>',
+  frame:'<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/> <circle cx="9" cy="9" r="2"/> <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+  party:'<path d="M5.8 11.3 2 22l10.7-3.79"/> <path d="M4 3h.01"/> <path d="M22 8h.01"/> <path d="M15 2h.01"/> <path d="M22 20h.01"/> <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/> <path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"/> <path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/> <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/>',
+  sparkle:'<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/> <path d="M20 3v4"/> <path d="M22 5h-4"/> <path d="M4 17v2"/> <path d="M5 18H3"/>',
+  trash:'<path d="M3 6h18"/> <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/> <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/> <line x1="10" x2="10" y1="11" y2="17"/> <line x1="14" x2="14" y1="11" y2="17"/>',
+  dots:'<circle cx="12" cy="12" r="1"/> <circle cx="19" cy="12" r="1"/> <circle cx="5" cy="12" r="1"/>',
+  hand:'<path d="M11 12h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"/> <path d="m7 18 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/> <path d="m2 13 6 6"/>',
+  grid:'<rect width="7" height="7" x="3" y="3" rx="1"/> <rect width="7" height="7" x="14" y="3" rx="1"/> <rect width="7" height="7" x="14" y="14" rx="1"/> <rect width="7" height="7" x="3" y="14" rx="1"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  wallet:'<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/> <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+  star:'<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+  flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  okc:'<circle cx="12" cy="12" r="10"/> <path d="m9 12 2 2 4-4"/>',
+  badc:'<circle cx="12" cy="12" r="10"/> <path d="m15 9-6 6"/> <path d="m9 9 6 6"/>',
+  wait:'<path d="M5 22h14"/> <path d="M5 2h14"/> <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/> <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>',
+  loader:'<path d="M12 2v4"/> <path d="m16.2 7.8 2.9-2.9"/> <path d="M18 12h4"/> <path d="m16.2 16.2 2.9 2.9"/> <path d="M12 18v4"/> <path d="m4.9 19.1 2.9-2.9"/> <path d="M2 12h4"/> <path d="m4.9 4.9 2.9 2.9"/>',
+  send:'<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/> <path d="m21.854 2.147-10.94 10.939"/>',
+  phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  msg:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/> <circle cx="9" cy="7" r="4"/> <path d="M22 21v-2a4 4 0 0 0-3-3.87"/> <path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  tag:'<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/> <circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
+  cal:'<path d="M8 2v4"/> <path d="M16 2v4"/> <rect width="18" height="18" x="3" y="4" rx="2"/> <path d="M3 10h18"/> <path d="M8 14h.01"/> <path d="M12 14h.01"/> <path d="M16 14h.01"/> <path d="M8 18h.01"/> <path d="M12 18h.01"/> <path d="M16 18h.01"/>',
+  ruler:'<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/> <path d="m14.5 12.5 2-2"/> <path d="m11.5 9.5 2-2"/> <path d="m8.5 6.5 2-2"/> <path d="m17.5 15.5 2-2"/>',
+  verified:'<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/> <path d="m9 12 2 2 4-4"/>',
+  gift:'<rect x="3" y="8" width="18" height="4" rx="1"/> <path d="M12 8v13"/> <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/> <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+  faucet:'<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/> <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/> <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>',
+  lamp:'<path d="M12 2v5"/> <path d="M6 7h12l4 9H2l4-9Z"/> <path d="M9.17 16a3 3 0 1 0 5.66 0"/>',
+  plug:'<path d="M12 22v-5"/> <path d="M9 8V2"/> <path d="M15 8V2"/> <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
+  key:'<path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/> <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/>',
+  heater:'<path d="M11 8c2-3-2-3 0-6"/> <path d="M15.5 8c2-3-2-3 0-6"/> <path d="M6 10h.01"/> <path d="M6 14h.01"/> <path d="M10 16v-4"/> <path d="M14 16v-4"/> <path d="M18 16v-4"/> <path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/> <path d="M5 20v2"/> <path d="M19 20v2"/>',
+  tv:'<rect width="20" height="15" x="2" y="7" rx="2" ry="2"/> <polyline points="17 2 12 7 7 2"/>',
+  door:'<path d="M13 4h3a2 2 0 0 1 2 2v14"/> <path d="M2 20h3"/> <path d="M13 20h9"/> <path d="M10 12v.01"/> <path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"/>',
+  zapoff:'<path d="M10.513 4.856 13.12 2.17a.5.5 0 0 1 .86.46l-1.377 4.317"/> <path d="M15.656 10H20a1 1 0 0 1 .78 1.63l-1.72 1.773"/> <path d="M16.273 16.273 10.88 21.83a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14H4a1 1 0 0 1-.78-1.63l4.507-4.643"/> <path d="m2 2 20 20"/>',
+  bucket:'<path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"/> <path d="m5 2 5 5"/> <path d="M2 13h15"/> <path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/>',
+  toilet:'<path d="M7 12h13a1 1 0 0 1 1 1 5 5 0 0 1-5 5h-.598a.5.5 0 0 0-.424.765l1.544 2.47a.5.5 0 0 1-.424.765H5.402a.5.5 0 0 1-.424-.765L7 18"/> <path d="M8 18a5 5 0 0 1-5-5V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8"/>',
+  tile1:'<path d="M5 3a2 2 0 0 0-2 2"/> <path d="M19 3a2 2 0 0 1 2 2"/> <path d="M21 19a2 2 0 0 1-2 2"/> <path d="M5 21a2 2 0 0 1-2-2"/> <path d="M9 3h1"/> <path d="M9 21h1"/> <path d="M14 3h1"/> <path d="M14 21h1"/> <path d="M3 9v1"/> <path d="M21 9v1"/> <path d="M3 14v1"/> <path d="M21 14v1"/>'
 };
-const ic=(n,c='i')=>`<svg class="${c}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[n]}"/></svg>`;
+const ic=(n,c='i')=>`<svg class="${c}" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
 
 /* ---------- data (example data for the prototype) ---------- */
 const CATS=[
@@ -722,14 +762,15 @@ const REQ_STATUS={pending:['wait','في انتظار الرد'],inspect:['go','�
 const STAGES=['محارة','تأسيس كهربا وسباكة','جبس بورد','سيراميك وبورسلين','نجارة وألوميتال','نقاشة','تسليم الشقة'];
 const ME_COMPANY='k1';
 const ORD_STATUS={new:['wait','طلب جديد'],preparing:['go','بيتجهّز'],onway:['go','في الطريق'],delivered:['ok','اتسلّم']};
-const pill=(map,s)=>`<span class="pill ${map[s][0]}">${map[s][1]}</span>`;
+const PILL_IC={wait:'wait',go:'loader',ok:'okc',bad:'badc'};
+const pill=(map,s)=>`<span class="pill ${map[s][0]}">${ic(PILL_IC[map[s][0]])}${map[s][1]}</span>`;
 
 /* ---------- shared pieces ---------- */
 function proCard(c){
   return `<button class="pro" type="button" data-action="open-crafter" data-id="${c.id}">
     ${avatar(c)}
     <div class="meta">
-      <div class="name">${c.name}${c.verified?ic('check'):''}</div>
+      <div class="name">${c.name}${c.verified?ic('verified'):''}</div>
       <div class="small muted">${cat(c.cat).name} · ${c.area}</div>
       <div class="rate"><span class="st">★</span>${r1(c.rating)} <span class="muted small">(${n(c.reviews)} تقييم)</span></div>
     </div>
@@ -796,15 +837,15 @@ function cHome(){
         <button class="lane lane-wide" type="button" data-action="open-finish"><span class="lane-ic">${ic('building')}</span><span><b>شطّب شقتك</b><small>احسب التكلفة، وقارن الصنايعية والشركات</small></span><span class="ce-go">${ic('back')}</span></button>
       </div>
       <div class="sec">
-        <div class="sec-h"><h2>الأكثر طلباً</h2><button class="link" type="button" data-action="open-quick">الكل</button></div>
-        <div class="pops">${pop.map(q=>`<button class="pop" type="button" data-action="open-q" data-id="${q.id}"><span class="pop-ic">${ic(cat(q.cat).icon)}</span><span><b>${q.name}</b><small>${money(q.price)}</small></span></button>`).join('')}</div>
+        <div class="sec-h"><h2 class="hd">${ic('flame')}الأكثر طلباً</h2><button class="link" type="button" data-action="open-quick">الكل</button></div>
+        <div class="pops">${pop.map(q=>`<button class="pop" type="button" data-action="open-q" data-id="${q.id}"><span class="pop-ic">${ic(q.icon)}</span><span><b>${q.name}</b><small>${money(q.price)}</small></span></button>`).join('')}</div>
       </div>
       <div class="sec">
-        <div class="sec-h"><h2>مساعد شطبلي</h2><button class="link" type="button" data-action="open-helper">الكل</button></div>
+        <div class="sec-h"><h2 class="hd">${ic('hand')}مساعد شطبلي</h2><button class="link" type="button" data-action="open-helper">الكل</button></div>
         <div class="tasks-row">${TASKS.map(t=>`<button class="task" type="button" data-action="open-task" data-id="${t.id}"><span class="t-ic">${ic(t.icon)}</span>${t.name}</button>`).join('')}</div>
       </div>
       <div class="sec">
-        <div class="sec-h"><h2>صنايعية قريبين منك</h2><button class="link" type="button" data-action="open-trades">الكل</button></div>
+        <div class="sec-h"><h2 class="hd">${ic('users')}صنايعية قريبين منك</h2><button class="link" type="button" data-action="open-trades">الكل</button></div>
         <div class="faces">${near.map(c=>`<button type="button" class="face" data-action="open-crafter" data-id="${c.id}">${avatar(c)}<span>${c.name.split(' ')[0]==='عم'?c.name.split(' ').slice(0,2).join(' '):c.name.split(' ')[0]}</span><small>${cat(c.cat).name}</small></button>`).join('')}</div>
       </div>
       <button class="mat-banner" type="button" data-action="open-materials" style="--img:url(${PH.cement})"><span><b>مواد البناء لحد باب الشقة</b><small>أسمنت، سيراميك، دهانات… توصيل خلال ٢٤ ساعة</small></span><span class="btn tape sm">اطلب</span></button>
@@ -818,13 +859,14 @@ function cHome(){
   </div>`;
 }
 function cServices(){
-  const sec=(id,title,sub,body)=>`<section class="sec svc" id="svc-${id}"><div class="sec-h"><h2>${title}</h2></div>${sub?`<p class="muted small" style="margin:-4px 0 0">${sub}</p>`:''}${body}</section>`;
+  const SVC_IC={fix:'bolt2',help:'hand',trades:'tool',finish:'building',mats:'truck'};
+  const sec=(id,title,sub,body)=>`<section class="sec svc" id="svc-${id}"><div class="sec-h"><h2 class="hd">${ic(SVC_IC[id])}${title}</h2></div>${sub?`<p class="muted small" style="margin:-4px 0 0">${sub}</p>`:''}${body}</section>`;
   return `${topbar('كل الخدمات')}
   <div class="scroll">
     <div class="chips jump" role="group" aria-label="أقسام">
-      ${[['fix','إصلاحات'],['help','مساعد'],['trades','صنايعية'],['finish','تشطيب'],['mats','مواد البناء']].map(([id,l])=>`<button class="chip" type="button" data-action="jump" data-v="${id}">${l}</button>`).join('')}
+      ${[['fix','إصلاحات'],['help','مساعد'],['trades','صنايعية'],['finish','تشطيب'],['mats','مواد البناء']].map(([id,l])=>`<button class="chip" type="button" data-action="jump" data-v="${id}">${ic(SVC_IC[id])}${l}</button>`).join('')}
     </div>
-    ${sec('fix','إصلاحات بسعر ثابت','بتعرف السعر قبل ما تطلب، وأقرب صنايعي متاح بيوصلك.',`<div class="card qlist">${QUICK.map(q=>`<button type="button" class="qrow" data-action="open-q" data-id="${q.id}"><span><b>${q.name}</b><small>${cat(q.cat).name} · ${q.dur} تقريباً</small></span><span class="qp">${money(q.price)}</span></button>`).join('')}</div>`)}
+    ${sec('fix','إصلاحات بسعر ثابت','بتعرف السعر قبل ما تطلب، وأقرب صنايعي متاح بيوصلك.',`<div class="card qlist">${QUICK.map(q=>`<button type="button" class="qrow" data-action="open-q" data-id="${q.id}"><span class="pop-ic sm">${ic(q.icon)}</span><span><b>${q.name}</b><small>${cat(q.cat).name} · ${q.dur} تقريباً</small></span><span class="qp">${money(q.price)}</span></button>`).join('')}</div>`)}
     ${sec('help','مساعد بالساعة','إيد زيادة لأي حاجة في البيت.',`<div class="tasks">${TASKS.map(t=>`<button class="task" type="button" data-action="open-task" data-id="${t.id}"><span class="t-ic">${ic(t.icon)}</span>${t.name}</button>`).join('')}</div>`)}
     ${sec('trades','صنايعية','قارن التقييمات والأسعار، واطلب معاينة.',`<div class="cats">${CATS.map(c=>`<button class="cat" type="button" data-action="open-cat" data-id="${c.id}"><img class="ph" src="${PH[c.id]}" alt="" loading="lazy">${c.name}</button>`).join('')}</div>`)}
     ${sec('finish','تشطيب الشقة','من الطوب الأحمر لحد التسليم.',`<div class="list">
@@ -839,7 +881,7 @@ function cTrades(){
   return `${topbar('الصنايعية')}
   <div class="scroll">
     <div class="cats">${CATS.map(c=>`<button class="cat" type="button" data-action="open-cat" data-id="${c.id}"><img class="ph" src="${PH[c.id]}" alt="" loading="lazy">${c.name}</button>`).join('')}</div>
-    <div class="sec"><div class="sec-h"><h2>الأعلى تقييماً</h2></div><div class="list">${top.map(proCard).join('')}</div></div>
+    <div class="sec"><div class="sec-h"><h2 class="hd">${ic('star')}الأعلى تقييماً</h2></div><div class="list">${top.map(proCard).join('')}</div></div>
   </div>`;
 }
 function cFinish(){
@@ -852,7 +894,7 @@ function cFinish(){
       <button class="calc-entry" type="button" data-action="open-companies"><span class="ce-ic">${ic('building')}</span><span class="ce-t"><b>أو شركة تشطيب</b><small>جهة واحدة، تسليم مفتاح، وضمان مكتوب</small></span><span class="ce-go">${ic('back')}</span></button>
       <button class="calc-entry" type="button" data-action="open-materials"><span class="ce-ic">${ic('truck')}</span><span class="ce-t"><b>مواد البناء</b><small>اطلبها لحد باب الشقة</small></span><span class="ce-go">${ic('back')}</span></button>
     </div>
-    <div class="sec"><div class="sec-h"><h2>شركات تشطيب</h2><button class="link" type="button" data-action="open-companies">الكل</button></div>
+    <div class="sec"><div class="sec-h"><h2 class="hd">${ic('building')}شركات تشطيب</h2><button class="link" type="button" data-action="open-companies">الكل</button></div>
       <div class="quick">${[...COMPANIES].sort((a,b)=>b.rating-a.rating).map(compCard).join('')}</div></div>
   </div>`;
 }
@@ -888,12 +930,12 @@ function cCrafter(id){
       <div class="stat"><b>${n(c.jobs)}</b><span>شغلانة خلصت</span></div>
       <div class="stat"><b>${n(c.price)}</b><span>ج.م / ${c.unit}</span></div>
     </div>
-    <div class="card sec"><h2>عن الصنايعي</h2><p class="muted" style="margin:0;line-height:1.8;font-size:14px">${c.about}</p></div>
+    <div class="card sec"><h2 class="hd">${ic('user')}عن الصنايعي</h2><p class="muted" style="margin:0;line-height:1.8;font-size:14px">${c.about}</p></div>
     ${beforeAfter(c)}
-    <div class="card"><h2 style="margin-bottom:10px">آراء العملاء</h2>
+    <div class="card"><h2 class="hd" style="margin-bottom:10px">${ic('msg')}آراء العملاء</h2>
       ${reviewsFor(c).map(([nm,st,tx])=>`<div class="review"><div class="top"><span>${nm}</span><span class="stars">${'★'.repeat(st)}${'☆'.repeat(5-st)}</span></div><p>${tx}</p></div>`).join('')}
     </div>
-    <div class="sticky-cta"><button class="btn block" type="button" data-action="open-request" data-id="${c.id}" ${avail?'':'disabled'}>اطلب ${c.name.split(' ')[0]}</button></div>
+    <div class="sticky-cta"><button class="btn block" type="button" data-action="open-request" data-id="${c.id}" ${avail?'':'disabled'}>${ic('send')}اطلب ${c.name.split(' ')[0]}</button></div>
   </div>`;
 }
 function requestSheet(id){
@@ -908,7 +950,7 @@ function requestSheet(id){
     </div>
     <label class="field">العنوان<input id="req-addr" required value="مدينة نصر، شارع عباس العقاد، عمارة ١٢"></label>
     <p class="note" style="margin:0">الصنايعي هيعاين الأول ويتفق معاك على السعر النهائي قبل ما يبدأ.</p>
-    <div class="row"><button class="btn ghost" type="button" data-action="close-sheet">إلغاء</button><button class="btn" type="submit">ابعت الطلب</button></div>
+    <div class="row"><button class="btn ghost" type="button" data-action="close-sheet">إلغاء</button><button class="btn" type="submit">${ic('send')}ابعت الطلب</button></div>
   </form></div>`;
 }
 function cMaterials(){
@@ -996,7 +1038,7 @@ function cAccount(){
       <div><span>${ic('wallet','i mi')} طريقة الدفع</span><b>كاش بعد الشغل</b></div>
       <button type="button" data-action="open-calc"><span>${ic('calc','i mi')} حاسبة التشطيب</span><b>${ic('back','i chev')}</b></button>
     </div>
-    <div class="sec"><h2>اشتغل مع شطبلي</h2>
+    <div class="sec"><h2 class="hd">${ic('gift')}اشتغل مع شطبلي</h2>
       <div class="card menu">
         <button type="button" data-action="role" data-role="crafter"><span>${ic('tool','i mi')} أنا صنايعي</span><b>${ic('back','i chev')}</b></button>
         <button type="button" data-action="role" data-role="company"><span>${ic('building','i mi')} عندي شركة تشطيب</span><b>${ic('back','i chev')}</b></button>
@@ -1030,7 +1072,7 @@ function cQuick(){
   return `${topbar('خدمات سريعة')}
   <div class="scroll">
     <div class="qhero">${ic('bolt2')}<div><b>سعر ثابت، من غير مفاصلة</b><small>بتطلب، وأقرب صنايعي متاح يوصلك. والفلوس بتتدفع بعد ما الشغل يخلص.</small></div></div>
-    ${groups.map(c=>`<div class="sec"><h2>${c.name}</h2><div class="card qlist">${QUICK.filter(q=>q.cat===c.id).map(q=>`<button type="button" class="qrow" data-action="open-q" data-id="${q.id}"><span><b>${q.name}</b><small>${q.dur} تقريباً</small></span><span class="qp">${money(q.price)}</span></button>`).join('')}</div></div>`).join('')}
+    ${groups.map(c=>`<div class="sec"><h2>${c.name}</h2><div class="card qlist">${QUICK.filter(q=>q.cat===c.id).map(q=>`<button type="button" class="qrow" data-action="open-q" data-id="${q.id}"><span class="pop-ic sm">${ic(q.icon)}</span><span><b>${q.name}</b><small>${q.dur} تقريباً</small></span><span class="qp">${money(q.price)}</span></button>`).join('')}</div></div>`).join('')}
     <p class="note">الأسعار هنا أمثلة للتجربة. السعر مصنعية بس، وقطع الغيار لو احتجتها بفاتورة لوحدها.</p>
   </div>`;
 }
@@ -1053,7 +1095,7 @@ function quickSheet(id){
 }
 function beforeAfter(c){
   const p=BA[c.cat]; if(!p)return '';
-  return `<div class="card sec"><div class="sec-h"><h2>شغل قبل وبعد</h2><span class="muted small">اسحب عشان تقارن</span></div>
+  return `<div class="card sec"><div class="sec-h"><h2 class="hd">${ic('frame')}شغل قبل وبعد</h2><span class="muted small">اسحب عشان تقارن</span></div>
     <div class="ba" style="--p:50%">
       <img src="${p.a}" alt="بعد الشغل">
       <img class="ba-before" src="${p.b}" alt="قبل الشغل">
@@ -1071,7 +1113,7 @@ function compCard(k){
   return `<button class="ccard" type="button" data-action="open-company" data-id="${k.id}">
     <span class="ccover" style="background-image:url(${BA[k.gallery[0]].a})"></span>
     <span class="cbody">${compLogo(k)}
-      <b>${k.name}${k.verified?ic('check'):''}</b>
+      <b>${k.name}${k.verified?ic('verified'):''}</b>
       <span class="rate"><span class="st">★</span>${r1(k.rating)} <span class="muted small">(${n(k.reviews)})</span></span>
       <small class="muted">${PKG[lv].name} من <b class="qp">${money(k.prices[lv])}</b> / م²</small>
     </span></button>`;
@@ -1090,7 +1132,7 @@ function cCompanies(){
     </div>
     <div class="list">${list.map(k=>`<button class="card crow" type="button" data-action="open-company" data-id="${k.id}">
       ${compLogo(k)}
-      <span class="meta"><b>${k.name}${k.verified?ic('check'):''}</b>
+      <span class="meta"><b>${k.name}${k.verified?ic('verified'):''}</b>
         <span class="small muted"><span style="color:var(--tape)">★</span> ${r1(k.rating)} · ${n(k.projects)} مشروع · ضمان ${n(k.guarantee)} ${k.guarantee>2?'سنين':'سنة'}</span>
         <span class="small muted">${k.areas}</span></span>
       <span class="price">${money(k.prices[lv])} / م²<b>${money(k.prices[lv]*c.area)}</b>للشقة</span>
@@ -1113,23 +1155,23 @@ function cCompany(id){
       <div class="stat"><b>${n(k.projects)}</b><span>شقة اتسلّمت</span></div>
       <div class="stat"><b>${n(k.guarantee)}</b><span>${k.guarantee>2?'سنين':'سنة'} ضمان</span></div>
     </div>
-    <div class="card sec"><h2>عن الشركة</h2><p class="muted" style="margin:0;line-height:1.8;font-size:14px">${k.about}</p>
+    <div class="card sec"><h2 class="hd">${ic('building')}عن الشركة</h2><p class="muted" style="margin:0;line-height:1.8;font-size:14px">${k.about}</p>
       <div class="facts"><span>${ic('clock')}مدة التنفيذ حوالي ${n(k.days)} يوم</span><span>${ic('shield')}ضمان ${n(k.guarantee)} ${k.guarantee>2?'سنين':'سنة'} على الشغل</span></div></div>
-    <div class="sec"><div class="sec-h"><h2>الباقات</h2><span class="muted small">لشقة ${n(c.area)} م²</span></div>
+    <div class="sec"><div class="sec-h"><h2 class="hd">${ic('tag')}الباقات</h2><span class="muted small">لشقة ${n(c.area)} م²</span></div>
       ${Object.entries(PKG).map(([p,v])=>`<button type="button" class="card pkg" data-action="calc-level" data-v="${p}" aria-pressed="${lv===p}">
         <span class="pkg-h"><b>${v.name}</b><span class="qp">${money(k.prices[p])} / م²</span></span>
         <span class="pkg-t">${money(k.prices[p]*c.area)} <small>تقريباً للشقة</small></span>
         <ul>${v.inc.map(x=>`<li>${x}</li>`).join('')}</ul>
       </button>`).join('')}
     </div>
-    <div class="card sec"><h2>من شغلهم</h2>
+    <div class="card sec"><h2 class="hd">${ic('frame')}من شغلهم</h2>
       <div class="gallery">${k.gallery.map(g=>`<img src="${BA[g].a}" alt="" loading="lazy">`).join('')}</div>
       <p class="note" style="margin:0;text-align:start">صور توضيحية للتجربة.</p>
     </div>
-    <div class="card"><h2 style="margin-bottom:10px">آراء العملاء</h2>
+    <div class="card"><h2 class="hd" style="margin-bottom:10px">${ic('msg')}آراء العملاء</h2>
       ${reviewsFor({id:'c'+k.id.slice(1)}).map(([nm,st,tx])=>`<div class="review"><div class="top"><span>${nm}</span><span class="stars">${'★'.repeat(st)}${'☆'.repeat(5-st)}</span></div><p>${tx}</p></div>`).join('')}
     </div>
-    <div class="sticky-cta"><button class="btn block" type="button" data-action="open-csheet" data-id="${k.id}">اطلب معاينة مجانية</button></div>
+    <div class="sticky-cta"><button class="btn block" type="button" data-action="open-csheet" data-id="${k.id}">${ic('cal')}اطلب معاينة مجانية</button></div>
   </div>`;
 }
 function companySheet(id){
@@ -1159,7 +1201,7 @@ function cHelper(){
       <span class="meta"><b>${t.name}</b><small>${t.desc}</small></span>
       <span class="price">من<b>${money(t.rate)}</b>/ ساعة</span>
     </button>`).join('')}</div>
-    <div class="sec"><h2>المساعدين</h2>
+    <div class="sec"><h2 class="hd">${ic('users')}المساعدين</h2>
       <div class="faces">${HELPERS.map(h=>`<div class="face">${hAvatar(h)}<span>${h.name.split(' ')[0]}</span><small><span style="color:var(--tape)">★</span> ${r1(h.rating)}</small></div>`).join('')}</div>
     </div>
     <p class="note">الأسعار والأسماء أمثلة للتجربة. السعر لكل مساعد في الساعة، وأقل مدة ساعتين.</p>
@@ -1230,16 +1272,16 @@ function calcResults(){
       <div class="calc-split"><span>مصنعية <b>${money(e.labor)}</b></span><span>مواد <b>${money(e.matCost)}</b></span></div>
       <div class="calc-bar"><i style="width:${Math.round(e.labor/e.total*100)}%"></i></div>
     </div>
-    <div class="sec"><h2>المصنعية بالترتيب</h2>
+    <div class="sec"><h2 class="hd">${ic('ruler')}المصنعية بالترتيب</h2>
       <div class="card steps">${e.lines.map((l,i)=>`<button type="button" class="step" data-action="open-cat" data-id="${l.t}">
         <span class="num">${n(i+1)}</span>
         <span class="st-m"><b>${cat(l.t).name}</b><small>${n(Math.round(l.q))} ${l.u} · ${l.note}</small></span>
         <span class="st-c">${money(l.cost)}</span></button>`).join('')}</div>
       <p class="note" style="margin:0;text-align:start">ده ترتيب الشغل الصح في التشطيب. دوس على أي صنعة عشان تشوف صنايعيتها.</p>
     </div>
-    <div class="sec"><h2>المواد اللي هتحتاجها</h2>
+    <div class="sec"><h2 class="hd">${ic('box')}المواد اللي هتحتاجها</h2>
       <div class="card mats">${Object.entries(e.mats).map(([id,q])=>{const p=product(id);return `<div class="mat"><img src="${PH[p.photo]}" alt=""><span><b>${p.name}</b><small>${n(q)} × ${p.unit}</small></span><span class="mc">${money(p.price*q)}</span></div>`}).join('')}</div>
-      <button class="btn tape block" type="button" data-action="calc-cart">${ic('bag')} ضيف كل المواد للسلة</button>
+      <button class="btn tape block" type="button" data-action="calc-cart">${ic('bag')}ضيف كل المواد للسلة</button>
     </div>
     <button class="calc-entry" type="button" data-action="open-companies">
       <span class="ce-ic">${ic('building')}</span>
@@ -1304,7 +1346,7 @@ function coProjects(){
   return `${topbar('المشاريع')}
   <div class="scroll">
     <div class="sec"><h2>شغالين فيها (${n(act.length)})</h2><div class="list">${act.length?act.map(card).join(''):'<div class="empty">مفيش مشاريع شغالة. لما عميل يقبل عرضك، المشروع هيظهر هنا.</div>'}</div></div>
-    <div class="sec"><h2>اتسلّمت</h2><div class="list">${done.length?done.map(card).join(''):'<div class="empty">لسه مفيش.</div>'}</div></div>
+    <div class="sec"><h2 class="hd">${ic('okc')}اتسلّمت</h2><div class="list">${done.length?done.map(card).join(''):'<div class="empty">لسه مفيش.</div>'}</div></div>
   </div>`;
 }
 function coAccount(){
@@ -1368,7 +1410,7 @@ function kJobs(){
   return `${topbar('شغلي')}
   <div class="scroll">
     <div class="sec"><h2>شغل جاري (${n(act.length)})</h2><div class="list">${act.length?act.map(card).join(''):'<div class="empty">مفيش شغل جاري.</div>'}</div></div>
-    <div class="sec"><h2>خلص</h2><div class="list">${done.length?done.map(card).join(''):'<div class="empty">لسه مفيش.</div>'}</div></div>
+    <div class="sec"><h2 class="hd">${ic('okc')}خلص</h2><div class="list">${done.length?done.map(card).join(''):'<div class="empty">لسه مفيش.</div>'}</div></div>
   </div>`;
 }
 function kAccount(){

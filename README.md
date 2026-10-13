@@ -6,3 +6,4 @@
 
 > نسخة تجريبية: أسماء الصنايعية والشركات وصورهم وأسعارهم أمثلة ومش حقيقية.
 > الصور من [Unsplash](https://unsplash.com) تحت Unsplash License.
+> الأيقونات من [Lucide](https://lucide.dev) تحت ISC License.
